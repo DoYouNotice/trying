@@ -1,7 +1,11 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 
 url = "https://geizhals.de/?cat=gra16_512"
+
+# Get the absolute path to the repository
+repo_path = os.path.abspath(os.path.dirname(__file__))
 
 # Send a GET request to the URL
 response = requests.get(url)
@@ -17,8 +21,9 @@ if response.status_code == 200:
     # Extract the links
     links = [link['href'] for link in link_elements]
 
-    # Save the links to a file
-    with open('scraped_links.txt', 'w') as file:
+    # Save the links to a file in the repository path
+    file_path = os.path.join(repo_path, 'scraped_links.txt')
+    with open(file_path, 'w') as file:
         for link in links:
             file.write(link + '\n')
 else:
