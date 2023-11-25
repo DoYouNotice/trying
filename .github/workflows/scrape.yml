@@ -26,10 +26,15 @@ jobs:
     - name: Run the script
       run: python test.py
 
-    - name: Commit and push changes
+    - name: Configure Git
       run: |
         git config user.email "actions@github.com"
         git config user.name "GitHub Actions"
-        git add scraped_links.txt
+
+    - name: Add and commit changes
+      run: |
+        git add "trying\\scraped_links.txt"
         git commit -m "Add scraped links"
-        git push origin main
+
+    - name: Push changes
+      run: git push origin main
