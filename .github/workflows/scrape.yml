@@ -6,39 +6,35 @@ on:
       - main
 
 jobs:
-  scrape_links:
+  scrape:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install beautifulsoup4 requests
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install beautifulsoup4 requests
 
-    - name: Run the script
-      run: python test.py
+      - name: Run Python script
+        run: python test.py
 
-    - name: Configure Git
-      run: |
-        git config user.email "actions@github.com"
-        git config user.name "GitHub Actions"
+      - name: Set Git remote URL
+        run: git remote set-url origin https://$GH_TOKEN@github.com/${{ github.repository }}.git
+        env:
+          GH_TOKEN: ${{ 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 }}
 
-    - name: Add and commit changes
-      run: |
-        git add "trying\\scraped_links.txt"
-        git commit -m "Add scraped links"
-
-    - name: Push changes
-      run: |
-        git remote set-url origin https://github.com/${{ github.repository }}.git
-        git push origin main
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Add scraped links"
+          git push origin main
