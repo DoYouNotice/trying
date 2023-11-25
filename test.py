@@ -7,7 +7,9 @@ def scrape_links(url, selector):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     elements = soup.select(selector)
-    links = [element.get('href') for element in elements]
+    
+    # Use a list comprehension to get href attributes, ignoring None values
+    links = [element.get('href') for element in elements if element.get('href') is not None]
     return links
 
 # Specify the URL and CSS selector
@@ -24,7 +26,7 @@ print(f"Scraped links: {links}")
 file_path = "scraped_links.txt"  # You can adjust the file path as needed
 with open(file_path, 'w') as file:
     for link in links:
-        file.write(link + '\n')
+        file.write(link + '\n' if link else 'No link available\n')
 
 # Print a message indicating the file path
 print(f"Links saved to: {file_path}")
