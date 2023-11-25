@@ -14,9 +14,12 @@ if response.status_code == 200:
     # Select the desired elements using the specified CSS selector
     link_elements = soup.select('tr.xf_tr:nth-child(4) > td:nth-child(3) a')
 
-    # Extract and print the links
+    # Extract the links
     links = [link['href'] for link in link_elements]
-    for link in links:
-        print(link)
+
+    # Save the links to a file
+    with open('scraped_links.txt', 'w') as file:
+        for link in links:
+            file.write(link + '\n')
 else:
     print(f"Failed to retrieve the page. Status code: {response.status_code}")
