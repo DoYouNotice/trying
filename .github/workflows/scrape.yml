@@ -1,24 +1,35 @@
-name: Web Scraping
+name: Scrape and Save Links
 
 on:
-  workflow_dispatch:
-  
+  push:
+    branches:
+      - main
+
 jobs:
-  scrape:
+  scrape_links:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
 
-      - name: Install dependencies
-        run: |
-          pip install beautifulsoup4 requests
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install beautifulsoup4 requests
 
-      - name: Run the web scraping script
-        run: python test.py
+    - name: Run the script
+      run: python test.py
+
+    - name: Commit and push changes
+      run: |
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+        git add scraped_links.txt
+        git commit -m "Add scraped links"
+        git push
