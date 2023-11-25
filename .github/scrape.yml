@@ -1,0 +1,26 @@
+name: Web Scraping
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install beautifulsoup4 requests
+
+    - name: Run the web scraping script
+      run: python path/to/your/script.py
