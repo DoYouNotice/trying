@@ -1,30 +1,30 @@
-import os
 import requests
 from bs4 import BeautifulSoup
+import os
 
+# Function to scrape links from the specified HTML elements
+def scrape_links(url, selector):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    elements = soup.select(selector)
+    links = [element.get('href') for element in elements]
+    return links
+
+# Specify the URL and CSS selector
 url = "https://geizhals.de/?cat=gra16_512"
+selector = "tr.xf_tr:nth-child(4) > td:nth-child(3)"
 
-# Get the absolute path to the repository
-repo_path = os.path.abspath(os.path.dirname(__file__))
+# Scrape links
+links = scrape_links(url, selector)
 
-# Send a GET request to the URL
-response = requests.get(url)
+# Print the scraped links
+print(f"Scraped links: {links}")
 
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    # Parse the HTML content of the page
-    soup = BeautifulSoup(response.text, 'html.parser')
+# Save the links to a file
+file_path = "scraped_links.txt"  # You can adjust the file path as needed
+with open(file_path, 'w') as file:
+    for link in links:
+        file.write(link + '\n')
 
-    # Select the desired elements using the specified CSS selector
-    link_elements = soup.select('tr.xf_tr:nth-child(4) > td:nth-child(3) a')
-
-    # Extract the links
-    links = [link['href'] for link in link_elements]
-
-    # Save the links to a file in the repository path
-    file_path = os.path.join(repo_path, 'scraped_links.txt')
-    with open(file_path, 'w') as file:
-        for link in links:
-            file.write(link + '\n')
-else:
-    print(f"Failed to retrieve the page. Status code: {response.status_code}")
+# Print a message indicating the file path
+print(f"Links saved to: {file_path}")
