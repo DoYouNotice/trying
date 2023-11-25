@@ -18,7 +18,7 @@ if response.status_code == 200:
     links = [link['href'] for link in link_elements]
 
     # Save the links to a file
-    with open("trying\\scraped_links.txt", "w") as file:
+    with open("trying\scraped_links.txt", "w") as file:
         for link in links:
             file.write(link + "\n")
 
