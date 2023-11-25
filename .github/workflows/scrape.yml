@@ -29,7 +29,7 @@ jobs:
       - name: Set Git remote URL
         run: git remote set-url origin https://$GH_TOKEN@github.com/${{ github.repository }}.git
         env:
-          GH_TOKEN: ${{ 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 }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Commit and push changes
         run: |
