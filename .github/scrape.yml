@@ -23,4 +23,4 @@ jobs:
         pip install beautifulsoup4 requests
 
     - name: Run the web scraping script
-      run: python path/to/your/script.py
+      run: python trying/test.py
