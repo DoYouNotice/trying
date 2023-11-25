@@ -37,4 +37,8 @@ jobs:
         git commit -m "Add scraped links"
 
     - name: Push changes
-      run: git push origin main
+      run: |
+        git remote set-url origin https://github.com/${{ github.repository }}.git
+        git push origin main
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
