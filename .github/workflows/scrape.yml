@@ -30,7 +30,7 @@ jobs:
       run: |
         git config user.email "actions@github.com"
         git config user.name "GitHub Actions"
-        git add trying//scraped_links.txt
+        git add trying/scraped_links.txt
         git commit -m "Add scraped links"
         git remote add origin_with_token "https://${{ secrets.GH_TOKEN }}@github.com/DoYouNotice/trying.git"
         git push origin_with_token main
